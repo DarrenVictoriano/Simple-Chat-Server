@@ -1,0 +1,24 @@
+<div class="container">
+
+    <div class="jumbotron">
+        <h1 class="display-4">Send Message</h1>
+        <p class="lead">This is a simple chat server</p>
+        <hr class="my-4">
+        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <input id="name-txt" class="form-control" placeholder="Name">
+        <br>
+        <textarea id="message" , class="form-control" placeholder="Your Message Here"></textarea>
+        <a id="send-btn" class="btn btn-primary btn-lg mt-3" href="#" role="button">Send</a>
+        <hr class="my-4">
+        <div id="messages">
+            <!-- Messages goes here -->
+            {{#each user}}
+            <div>
+                <p>{{this.name}}</p>
+                <p>{{this.message}}</p>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+
+</div>
