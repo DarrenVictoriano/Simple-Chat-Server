@@ -7,6 +7,10 @@ var db = require("./models");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
+// Socket.IO for realtime db updates
+var server = require("http").Server(app);
+var io = require("socket.io")(server);
+
 // Middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -22,8 +26,8 @@ app.engine(
 app.set("view engine", "handlebars");
 
 // Routes
-require("./routes/apiRoutes")(app);
-require("./routes/htmlRoutes")(app);
+require("./routes/apiRoutes")(app, io);
+require("./routes/htmlRoutes")(app, io);
 
 var syncOptions = { force: false };
 
@@ -33,14 +37,22 @@ if (process.env.NODE_ENV === "test") {
     syncOptions.force = true;
 }
 
+io.on('connection', () => {
+    console.log('a user is connected');
+});
+
 db.sequelize.sync(syncOptions).then(function () {
-    app.listen(PORT, function () {
+
+    // socket IO does not work with app.listen
+    // you have to use http listen and not express
+    server.listen(PORT, function () {
         console.log(
             "==> 🌎  Listening on port %s. Visit http://localhost:%s/ in your browser.",
             PORT,
             PORT
         );
     });
+
 });
 
 module.exports = app;

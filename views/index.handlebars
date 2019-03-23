@@ -12,12 +12,14 @@
         <hr class="my-4">
         <div id="messages">
             <!-- Messages goes here -->
-            {{#each userdb}}
-            <div>
-                <p>{{this.name}}</p>
+
+            <div id="message-div">
+                {{#each userdb}}
+                <h4>{{this.name}}</h4>
                 <p>{{this.message}}</p>
+                {{/each}}
             </div>
-            {{/each}}
+
         </div>
     </div>
 

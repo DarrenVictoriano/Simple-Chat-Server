@@ -1,4 +1,6 @@
 // Define API calls as an object for scalability
+var socket = io();
+
 var API = {
     getUser: function () {
         return $.ajax({
@@ -18,6 +20,10 @@ var API = {
     }
 };
 
+socket.on("message", function (res) {
+    $("#message-div").append("<h4>" + res.name + "</h4><p>" + res.message + "</p>");
+});
+
 $("#send-btn").on("click", function (e) {
     e.preventDefault();
 
@@ -26,10 +32,8 @@ $("#send-btn").on("click", function (e) {
         message: $("#message").val()
     };
 
-    console.log(user);
-
-    API.postUser(user).then(function () {
-        location.replace("/");
+    API.postUser(user).then(function (res) {
+        console.log(res);
     })
 
 });
