@@ -9,7 +9,8 @@ module.exports = function (app) {
     });
 
     // Post Mesasges
-    app.get("/api/messages", function (req, res) {
+    app.post("/api/messages", function (req, res) {
+        console.log(req.body)
         db.User.create(req.body).then(function (userDB) {
             res.json(userDB);
         });
